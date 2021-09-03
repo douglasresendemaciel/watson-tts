@@ -1,48 +1,41 @@
 {
-  "name": "robtesch/watson_tts",
-  "description": "A Laravel package for making use of IBM's Watson Text-To-Speech Service",
-  "keywords": [
-    "watson",
-    "ibm",
-    "php",
-    "tts",
-    "text-to-speech"
-  ],
-  "homepage": "https://github.com/robtesch/watson-tts",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Robert Teschmacher",
-      "email": "r.teschmacher@gmail.com"
+    "name": "robtesch/watson_tts",
+    "description": "A Laravel package for making use of IBM's Watson Text-To-Speech Service",
+    "keywords": [
+        "watson",
+        "ibm",
+        "php",
+        "tts",
+        "text-to-speech"
+    ],
+    "homepage": "https://github.com/robtesch/watson-tts",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robert Teschmacher",
+            "email": "r.teschmacher@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.3",
+        "laravel/framework": ">=5.8",
+        "ext-json": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Robtesch\\WatsonTTS\\WatsonTTSServiceProvider"
+            ],
+            "aliases": {
+                "WatsonTTS": "WatsonTTS"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Robtesch\\WatsonTTS\\": "src"
+        }
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "require": {
-    "php": "^7.3",
-    "illuminate/support": "^5.8.31",
-    "illuminate/filesystem": "^5.8.31",
-    "guzzlehttp/guzzle": "^6.3.3",
-    "wapmorgan/media-file": "^0.1.4",
-    "symfony/http-foundation": "^4.3",
-    "illuminate/container": "^5.7"
-  },
-  "require-dev": {
-    "illuminate/config": "^5.8.31"
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Robtesch\\Watsontts\\WatsonttsServiceProvider"
-      ],
-      "aliases": {
-        "Watsontts": "Robtesch\\Watsontts\\Facades\\Watsontts"
-      }
-    }
-  },
-  "autoload": {
-    "psr-4": {
-      "Robtesch\\Watsontts\\": "src"
-    }
-  }
 }
