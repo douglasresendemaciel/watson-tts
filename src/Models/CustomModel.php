@@ -1,25 +1,48 @@
 <?php
 
-namespace Robtesch\Watsontts\Models;
+namespace Robtesch\WatsonTTS\Models;
 
 /**
  * Class CustomModel
- * @package Robtesch\Watsontts\Models
+ * @package Robtesch\WatsonTTS\Models
  */
 class CustomModel
 {
-
+    /**
+     * @var mixed|null
+     */
     protected $customizationId;
+    /**
+     * @var mixed|null
+     */
     protected $name;
+    /**
+     * @var mixed|null
+     */
     protected $language;
+    /**
+     * @var mixed|null
+     */
     protected $owner;
+    /**
+     * @var mixed|null
+     */
     protected $created;
+    /**
+     * @var mixed|null
+     */
     protected $lastModified;
+    /**
+     * @var mixed|null
+     */
     protected $description;
+    /**
+     * @var array|mixed
+     */
     protected $words;
 
     /**
-     * Synthesis constructor.
+     * CustomModel constructor.
      * @param array|null $data
      */
     public function __construct(array $data = null)

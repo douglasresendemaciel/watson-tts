@@ -1,26 +1,25 @@
 <?php
 
-namespace Robtesch\Watsontts;
+namespace Robtesch\WatsonTTS;
 
 use Exception;
-use Robtesch\Watsontts\Exceptions\FileSystemException;
-use Robtesch\Watsontts\Exceptions\ValidationException;
-use Robtesch\Watsontts\Models\Voice;
+use Robtesch\WatsonTTS\Exceptions\FileSystemException;
+use Robtesch\WatsonTTS\Exceptions\ValidationException;
+use Robtesch\WatsonTTS\Models\Voice;
 
 /**
  * Class Validator
- * @package Robtesch\Watsontts
+ * @package Robtesch\WatsonTTS
  */
 class Validator
 {
-
     /**
      * @param string $path
      * @return string
-     * @throws Exception
+     * @throws FileSystemException
      */
-    public function validatePath(string $path)
-    : string {
+    public function validatePath(string $path): string
+    {
         if (file_exists($path)) {
             throw new FileSystemException('File "' . $path . '" already exists. Please use a different file name.', 422);
         }
@@ -32,12 +31,12 @@ class Validator
     }
 
     /**
-     * @param string|Voice $voice
+     * @param $voice
      * @return string
-     * @throws Exception
+     * @throws ValidationException
      */
-    public function validateVoiceName($voice)
-    : string {
+    public function validateVoiceName($voice): string
+    {
         if ($voice instanceof Voice) {
             $voiceName = $voice->getName();
         } elseif (is_string($voice)) {
@@ -57,8 +56,8 @@ class Validator
      * @return string
      * @throws ValidationException
      */
-    public function validateMethod(string $method)
-    : string {
+    public function validateMethod(string $method): string
+    {
         $ucMethod = strtoupper($method);
         if (!in_array($ucMethod, ['GET', 'POST'])) {
             throw new ValidationException('Specified method "' . $method . '" not allowed, you must use either GET or POST');
@@ -70,12 +69,12 @@ class Validator
     /**
      * @param string $savePath
      * @param string $accept
-     * @param bool   $validate
+     * @param false $validate
      * @return string
      * @throws ValidationException
      */
-    public function getFileExtension(string $savePath, string $accept, $validate = false)
-    : string {
+    public function getFileExtension(string $savePath, string $accept, $validate = false): string
+    {
         if ($validate) {
             $accept = $this->validateAcceptTypes($savePath, $accept);
         }
@@ -97,8 +96,8 @@ class Validator
      * @return string
      * @throws ValidationException
      */
-    public function validateAcceptTypes(string $savePath, string $accept)
-    : string {
+    public function validateAcceptTypes(string $savePath, string $accept): string
+    {
         if ($accept === null) {
             foreach (Constants::FILE_EXTENSIONS as $key => $extension) {
                 if ($this->stringEndsWith($savePath, $extension)) {
@@ -118,8 +117,8 @@ class Validator
      * @param string $needle
      * @return bool
      */
-    public function stringEndsWith(string $haystack, string $needle)
-    : bool {
+    public function stringEndsWith(string $haystack, string $needle): bool
+    {
         $length = strlen($needle);
         if ($length == 0) {
             return true;
@@ -129,13 +128,12 @@ class Validator
     }
 
     /**
-     * @param null|string $format
+     * @param string|null $format
      * @return string
      * @throws ValidationException
      */
-    public function validateFormat(string $format = null)
-    : string {
-        //Return default if not provided.
+    public function validateFormat(string $format = null): string
+    {
         if ($format === null) {
             return 'ipa';
         }
@@ -151,9 +149,8 @@ class Validator
      * @return string
      * @throws ValidationException
      */
-    public function validateLanguage(string $language = null)
-    : string {
-        //Return default if not provided.
+    public function validateLanguage(string $language = null): string
+    {
         if ($language === null) {
             return 'en-US';
         }

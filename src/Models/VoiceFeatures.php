@@ -1,15 +1,20 @@
 <?php
 
-namespace Robtesch\Watsontts\Models;
+namespace Robtesch\WatsonTTS\Models;
 
 /**
  * Class VoiceFeatures
- * @package Robtesch\Watsontts\Models
+ * @package Robtesch\WatsonTTS\Models
  */
 class VoiceFeatures
 {
-
+    /**
+     * @var false
+     */
     protected $voiceTransformation;
+    /**
+     * @var false
+     */
     protected $customPronunciation;
 
     /**

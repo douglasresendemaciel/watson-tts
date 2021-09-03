@@ -1,26 +1,58 @@
 <?php
 
-namespace Robtesch\Watsontts\Models;
+namespace Robtesch\WatsonTTS\Models;
 
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class Synthesis
- * @package Robtesch\Watsontts\Models
+ * @package Robtesch\WatsonTTS\Models
  */
 class Synthesis
 {
-
+    /**
+     * @var mixed
+     */
     protected $extension;
+    /**
+     * @var mixed
+     */
     protected $size;
+    /**
+     * @var mixed
+     */
     protected $length;
+    /**
+     * @var mixed
+     */
     protected $bitRate;
+    /**
+     * @var mixed
+     */
     protected $sampleRate;
+    /**
+     * @var mixed
+     */
     protected $channels;
+    /**
+     * @var mixed
+     */
     protected $text;
+    /**
+     * @var mixed
+     */
     protected $voice;
+    /**
+     * @var mixed
+     */
     protected $customisationId;
+    /**
+     * @var mixed
+     */
     protected $fullPath;
+    /**
+     * @var mixed
+     */
     protected $relativePath;
 
     /**
@@ -45,19 +77,16 @@ class Synthesis
     /**
      * @return BinaryFileResponse
      */
-    public function download()
-    : BinaryFileResponse
+    public function download(): BinaryFileResponse
     {
-        /** @noinspection PhpUndefinedFunctionInspection */
         return response()->download($this->fullPath);
     }
 
     /**
-     * @return mixed
+     * @return BinaryFileResponse
      */
-    public function file()
+    public function file(): BinaryFileResponse
     {
-        /** @noinspection PhpUndefinedFunctionInspection */
         return response()->file($this->fullPath);
     }
 }

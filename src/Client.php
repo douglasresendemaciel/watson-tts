@@ -1,6 +1,6 @@
 <?php
 
-namespace Robtesch\Watsontts;
+namespace Robtesch\WatsonTTS;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -9,15 +9,29 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Client
- * @package Robtesch\Watsontts
+ * @package Robtesch\WatsonTTS
  */
 class Client extends GuzzleClient
 {
-
+    /**
+     * @var mixed
+     */
     protected $endpoint;
+    /**
+     * @var mixed
+     */
     protected $apiVersion;
+    /**
+     * @var mixed
+     */
     protected $username;
+    /**
+     * @var mixed
+     */
     protected $password;
+    /**
+     * @var
+     */
     protected $client;
 
     /**
@@ -32,14 +46,14 @@ class Client extends GuzzleClient
         $this->password = $config['password'] ?? Config::get('watson-tts.password', '');
         parent::__construct([
             'base_uri' => $this->endpoint . '/' . ltrim($this->apiVersion, '/') . '/',
-            'auth'     => [$this->username, $this->password],
+            'auth' => [$this->username, $this->password],
         ]);
     }
 
     /**
      * @param string $method
      * @param string $uri
-     * @param array  $options
+     * @param array $options
      * @return mixed|ResponseInterface
      * @throws GuzzleException
      */
@@ -48,15 +62,15 @@ class Client extends GuzzleClient
         $uri = ltrim($uri, '/');
 
         return json_decode((string)parent::request($method, $uri, $options)
-                                         ->getBody());
+            ->getBody());
     }
 
     /**
      * @param string $endpoint
      * @return $this
      */
-    public function setEndpoint(string $endpoint)
-    : self {
+    public function setEndpoint(string $endpoint): self
+    {
         $this->endpoint = $endpoint;
 
         return $this;
@@ -66,8 +80,8 @@ class Client extends GuzzleClient
      * @param string $apiVersion
      * @return $this
      */
-    public function setApiVersion(string $apiVersion)
-    : self {
+    public function setApiVersion(string $apiVersion): self
+    {
         $this->apiVersion = $apiVersion;
 
         return $this;
@@ -77,8 +91,8 @@ class Client extends GuzzleClient
      * @param string $username
      * @return $this
      */
-    public function setUsername(string $username)
-    : self {
+    public function setUsername(string $username): self
+    {
         $this->username = $username;
 
         return $this;
@@ -88,8 +102,8 @@ class Client extends GuzzleClient
      * @param string $password
      * @return $this
      */
-    public function setPassword(string $password)
-    : self {
+    public function setPassword(string $password): self
+    {
         $this->password = $password;
 
         return $this;

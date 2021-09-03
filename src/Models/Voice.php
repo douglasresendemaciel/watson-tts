@@ -1,23 +1,43 @@
 <?php
 
-namespace Robtesch\Watsontts\Models;
+namespace Robtesch\WatsonTTS\Models;
 
 use Exception;
-use Robtesch\Watsontts\Exceptions\ValidationException;
+use Robtesch\WatsonTTS\Exceptions\ValidationException;
 
 /**
  * Class Voice
- * @package Robtesch\Watsontts\Models
+ * @package Robtesch\WatsonTTS\Models
  */
 class Voice
 {
-
+    /**
+     * @var null
+     */
     protected $name;
+    /**
+     * @var null
+     */
     protected $language;
+    /**
+     * @var false
+     */
     protected $customizable;
+    /**
+     * @var string
+     */
     protected $gender;
+    /**
+     * @var null
+     */
     protected $url;
+    /**
+     * @var VoiceFeatures
+     */
     protected $supportedFeatures;
+    /**
+     * @var null
+     */
     protected $description;
 
     /**
@@ -47,8 +67,8 @@ class Voice
      * @param string $name
      * @return $this
      */
-    public function setName(string $name)
-    : self {
+    public function setName(string $name): self
+    {
         $this->name = $name;
 
         return $this;
@@ -66,8 +86,8 @@ class Voice
      * @param string $language
      * @return $this
      */
-    public function setLanguage(string $language)
-    : self {
+    public function setLanguage(string $language): self
+    {
         $this->language = $language;
 
         return $this;
@@ -77,8 +97,8 @@ class Voice
      * @param bool $customisable
      * @return $this
      */
-    public function setCustomisable(bool $customisable)
-    : self {
+    public function setCustomisable(bool $customisable): self
+    {
         $this->customizable = $customisable;
 
         return $this;
@@ -87,8 +107,7 @@ class Voice
     /**
      * @return string
      */
-    public function getGender()
-    : string
+    public function getGender(): string
     {
         return $this->gender;
     }
@@ -97,8 +116,8 @@ class Voice
      * @param string $gender
      * @return $this
      */
-    public function setGender(string $gender)
-    : self {
+    public function setGender(string $gender): self
+    {
         $this->gender = $gender;
 
         return $this;
@@ -116,8 +135,8 @@ class Voice
      * @param string $url
      * @return $this
      */
-    public function setUrl(string $url)
-    : self {
+    public function setUrl(string $url): self
+    {
         $this->url = $url;
 
         return $this;
@@ -126,8 +145,7 @@ class Voice
     /**
      * @return VoiceFeatures
      */
-    public function getSupportedFeatures()
-    : VoiceFeatures
+    public function getSupportedFeatures(): VoiceFeatures
     {
         return $this->supportedFeatures;
     }
@@ -135,10 +153,10 @@ class Voice
     /**
      * @param $supportedFeatures
      * @return $this
-     * @throws Exception
+     * @throws ValidationException
      */
-    public function setSupportedFeatures($supportedFeatures)
-    : self {
+    public function setSupportedFeatures($supportedFeatures): self
+    {
         if (is_array($supportedFeatures)) {
             $supportedFeatures = json_decode(json_encode($supportedFeatures));
         }
@@ -162,8 +180,8 @@ class Voice
      * @param string $description
      * @return $this
      */
-    public function setDescription(string $description)
-    : self {
+    public function setDescription(string $description): self
+    {
         $this->description = $description;
 
         return $this;
