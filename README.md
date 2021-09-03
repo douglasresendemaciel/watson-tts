@@ -10,23 +10,23 @@ A laravel package designed to help you make use of IBM's Watson Text-To-Speech (
 composer require robtesch/watson_tts
 ```
 
-3) If you're running Laravel >= 5.5, package discovery will configure the service provider and `Watsontts` alias out of the box.
+3) If you're running Laravel >= 5.5, package discovery will configure the service provider and `WatsonTTS` alias out of the box.
 
     Otherwise, for Laravel <= 5.4, edit your `config/app.php` file and:
 
     - add the following to the `providers` array:
         ``` php
-        Robtesch\Watsontts\WatsonServiceProvider::class,
+        Robtesch\WatsonTTS\WatsonServiceProvider::class,
         ```
     - add the following to the `aliases` array: 
         ``` php
-        'Watsontts' => Robtesch\Watsontts\Facades\Watsontts::class,
+        'WatsonTTS' => Robtesch\WatsonTTS\Facades\WatsonTTS::class,
         ```
 
 4) Run the command below to publish the package config file [config/watson-tts.php](src/config/watson-tts.php):
 
 ``` shell
-php artisan vendor:publish --provider="Robtesch\Watsontts\WatsonServiceProvider"
+php artisan vendor:publish --provider="Robtesch\WatsonTTS\WatsonServiceProvider"
 ```
 
 ## Configuration
@@ -49,9 +49,9 @@ and will move every message into INBOX.read. Please be aware that this should no
 tested in real live but it gives an impression on how things work.
 
 ``` php
-use Robtesch\Watsontts\Watsontts;
+use Robtesch\WatsonTTS\WatsonTTS;
 
-$watsonTts = new Watsontts();
+$WatsonTTS = new WatsonTTS();
 
 $text = 'Watson Text-To-Speech Service allows me to turn text into audio clips.';
 $voice = 'en-US_LisaVoice';
@@ -62,7 +62,9 @@ $savePath = storage_path('app/path/to/save.mp3');
 //If you provide a file extension, you do not need to specify the "accept" param.
 $accept = 'audio/mp3';
 
-$synthesis = $watsonTts->synthesizeAudio($text, $voice, $savePath, $accept);
+$method = "POST";
+
+$synthesis = $WatsonTTS->synthesizeAudio($method, $text, $voice, $savePath, $accept);
 
 //Will return a Laravel file download response.
 return $synthesis->download();
@@ -73,8 +75,8 @@ Alternatively, if you want to customise the credentials used to connect to watso
 Either pass a config array to the Client:
 
 ```
-use Robtesch\Watsontts\Watsontts;
-use Robtesch\Watsontts\Client;
+use Robtesch\WatsonTTS\WatsonTTS;
+use Robtesch\WatsonTTS\Client;
 
 //Config values will be used for keys not present in the config array.
 $config = [
@@ -86,14 +88,14 @@ $config = [
 
 $client = new Client($config);
 
-$watsonTts = new Watsontts($client);
+$WatsonTTS = new WatsonTTS($client);
 ```
 
 Or set the values directly on the client:
 
 ```
-use Robtesch\Watsontts\Watsontts;
-use Robtesch\Watsontts\Client;
+use Robtesch\WatsonTTS\WatsonTTS;
+use Robtesch\WatsonTTS\Client;
 
 $client = new Client();
 
@@ -102,5 +104,5 @@ $client->setApiVersion('someotherversion');
 $client->setUsername('username');
 $client->setPassword('password');
 
-$watsonTts = new Watsontts($client);
+$WatsonTTS = new WatsonTTS($client);
 ```
