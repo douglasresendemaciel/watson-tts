@@ -1,28 +1,33 @@
 <?php
 
-namespace Robtesch\Watsontts;
+namespace Robtesch\WatsonTTS;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
-use Robtesch\Watsontts\Exceptions\ValidationException;
-use Robtesch\Watsontts\Models\CustomModel;
-use Robtesch\Watsontts\Models\Synthesis;
-use Robtesch\Watsontts\Models\Voice;
+use Robtesch\WatsonTTS\Exceptions\ValidationException;
+use Robtesch\WatsonTTS\Models\CustomModel;
+use Robtesch\WatsonTTS\Models\Synthesis;
+use Robtesch\WatsonTTS\Models\Voice;
 use RuntimeException;
 use wapmorgan\MediaFile\Exceptions\FileAccessException;
 
 /**
- * Class Watsontts
- * @package Robtesch\Watsontts
+ * Class WatsonTTS
+ * @package Robtesch\WatsonTTS
  */
-class Watsontts
+class WatsonTTS
 {
-
+    /**
+     * @var Client
+     */
     protected $client;
+    /**
+     * @var Validator
+     */
     protected $validator;
 
     /**
-     * Watsontts constructor.
+     * WatsonTTS constructor.
      * @param Client|null $client
      */
     public function __construct(Client $client = null)
@@ -35,8 +40,7 @@ class Watsontts
      * @return array
      * @throws GuzzleException
      */
-    public function getVoices()
-    : array
+    public function getVoices(): array
     {
         $response = $this->client->request('GET', 'voices');
         $voices = [];
@@ -51,9 +55,10 @@ class Watsontts
      * @param string $voice
      * @return Voice
      * @throws GuzzleException
+     * @throws ValidationException
      */
-    public function getVoice(string $voice)
-    : Voice {
+    public function getVoice(string $voice): Voice
+    {
         $voice = $this->validator->validateVoiceName($voice);
         $response = $this->client->request('GET', 'voices/' . $voice);
 
@@ -61,19 +66,20 @@ class Watsontts
     }
 
     /**
-     * @param string       $method
-     * @param string       $text
-     * @param string|Voice $voice
-     * @param string       $savePath
-     * @param string       $accept
-     * @param string|null  $customisationId
+     * @param string $method
+     * @param string $text
+     * @param $voice
+     * @param string $savePath
+     * @param string|null $accept
+     * @param string|null $customisationId
      * @return Synthesis
-     * @throws ValidationException
-     * @throws GuzzleException
+     * @throws Exceptions\FileSystemException
      * @throws FileAccessException
+     * @throws GuzzleException
+     * @throws ValidationException
      */
-    public function synthesizeAudio(string $method, string $text, $voice, string $savePath, string $accept = null, string $customisationId = null)
-    : Synthesis {
+    public function synthesizeAudio(string $method, string $text, $voice, string $savePath, string $accept = null, string $customisationId = null): Synthesis
+    {
         $method = $this->validator->validateMethod($method);
         $voiceName = $this->validator->validateVoiceName($voice);
         $acceptString = $this->validator->validateAcceptTypes($savePath, $accept);
@@ -82,7 +88,7 @@ class Watsontts
         $savePath = $this->validator->validatePath($sink);
         $queryData = [
             'accept' => $acceptString,
-            'voice'  => $voiceName,
+            'voice' => $voiceName,
         ];
         if ($customisationId !== null) {
             $queryData['customization_id'] = $customisationId;
@@ -99,22 +105,21 @@ class Watsontts
     }
 
     /**
-     * @param string       $text
-     * @param string|Voice $voice
-     * @param string|null  $format
-     * @param string|null  $customisationId
+     * @param string $text
+     * @param $voice
+     * @param string|null $format
+     * @param string|null $customisationId
      * @return string
-     * @throws ValidationException
      * @throws GuzzleException
-     * @throws Exception
+     * @throws ValidationException
      */
-    public function getPronunciation(string $text, $voice, string $format = null, string $customisationId = null)
-    : string {
+    public function getPronunciation(string $text, $voice, string $format = null, string $customisationId = null): string
+    {
         $voice = $this->validator->validateVoiceName($voice);
         $format = $this->validator->validateFormat($format);
         $queryData = [
-            'text'   => $text,
-            'voice'  => $voice,
+            'text' => $text,
+            'voice' => $voice,
             'format' => $format,
         ];
         if ($customisationId !== null) {
@@ -128,15 +133,15 @@ class Watsontts
     }
 
     /**
-     * @param string      $name
+     * @param string $name
      * @param string|null $description
      * @param string|null $language
      * @return string
-     * @throws ValidationException
      * @throws GuzzleException
+     * @throws ValidationException
      */
-    public function createCustomModel(string $name, string $description = null, string $language = null)
-    : string {
+    public function createCustomModel(string $name, string $description = null, string $language = null): string
+    {
         $jsonArray = [
             'name' => $name,
         ];

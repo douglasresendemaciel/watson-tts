@@ -1,20 +1,15 @@
 <?php /** @noinspection PhpUndefinedFunctionInspection */
 
-namespace Robtesch\Watsontts;
+namespace Robtesch\WatsonTTS;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class WatsonttsServiceProvider
- * @package Robtesch\Watsontts
+ * Class WatsonTTSServiceProvider
+ * @package Robtesch\WatsonTTS
  */
-class WatsonttsServiceProvider extends ServiceProvider
+class WatsonTTSServiceProvider extends ServiceProvider
 {
-
-    /**
-     * Bootstrap services.
-     * @return void
-     */
     public function boot()
     {
         $configPath = __DIR__ . '/../config/watson-tts.php';
@@ -25,18 +20,14 @@ class WatsonttsServiceProvider extends ServiceProvider
         }
         $this->publishes([$configPath => $publishPath], 'config');
     }
-
-    /**
-     * Register services.
-     * @return void
-     */
+    
     public function register()
     {
         $configPath = __DIR__ . '/../config/watson-tts.php';
         $this->mergeConfigFrom($configPath, 'watson-tts');
-        $this->app->bind('Watsontts', static function () {
-            return new Watsontts;
+        $this->app->bind('WatsonTTS', static function () {
+            return new WatsonTTS;
         });
-        $this->app->alias(Watsontts::class, 'Watsontts');
+        $this->app->alias(WatsonTTS::class, 'WatsonTTS');
     }
 }
